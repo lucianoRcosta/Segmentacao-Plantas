@@ -15,14 +15,17 @@ for arq in arquivos:
 
         if img is not None:
             #aplicar borramento gaussiano para reduzir ruídos
-            borrado = cv2.GaussianBlur(img, (3, 3), 0)
+            borrado_mask = cv2.GaussianBlur(img, (3, 3), 0)
+            borrado_sobel = cv2.GaussianBlur(img, (15, 15), 0)
 
             #converte imagem para o espaço de cores hsv
-            hsv = cv2.cvtColor(borrado, cv2.COLOR_BGR2HSV)
+            hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
 
+            #limite inferior e superior 1 de matiz de tonalidade verde
             lower_green_1 = np.array([35, 50, 50])  
             upper_green_1 = np.array([50, 255, 255])
 
+             #limite inferior e superior 2 de matiz de tonalidade verde
             lower_green_2 = np.array([50, 50, 50])  
             upper_green_2 = np.array([85, 255, 255])
 
@@ -31,8 +34,15 @@ for arq in arquivos:
 
             mask = cv2.bitwise_or(mask1, mask2)
 
+            #FILTRO DE SOBEL
+            #Aplicação do filtro
+            sobelx = cv2.Sobel(borrado_sobel, cv2.CV_64F, 1, 0, ksize=3)
+            sobely = cv2.Sobel(borrado_sobel, cv2.CV_64F, 0, 1, ksize=3)
+            bordas = cv2.bitwise_or(np.absolute(sobelx), np.absolute(sobely))
+
             cv2.imshow('Imagem original', img)
-            cv2.imshow('Máscara', mask)
+            cv2.imshow('Máscara Binária', mask)
+            cv2.imshow('Bordas', bordas)
 
             cv2.waitKey(0)
             cv2.destroyAllWindows()
