@@ -22,28 +22,28 @@ for arq in arquivos:
 
             #limite inferior e superior 1 de matiz de tonalidade verde
             lower_green_1 = np.array([0, 20, 35])  
-            upper_green_1 = np.array([50, 255, 255])
+            upper_green_1 = np.array([110, 255, 255])
 
              #limite inferior e superior 2 de matiz de tonalidade verde
-            lower_green_2 = np.array([50, 20, 35])  
-            upper_green_2 = np.array([110, 255, 255])
+            # lower_green_2 = np.array([50, 20, 35])  
+            # upper_green_2 = np.array([110, 255, 255])
 
             mask1 = cv2.inRange(hsv, lower_green_1, upper_green_1)
-            mask2 = cv2.inRange(hsv, lower_green_2, upper_green_2)
+            # mask2 = cv2.inRange(hsv, lower_green_2, upper_green_2)
 
-            mask = cv2.bitwise_or(mask1, mask2)
+            # mask = cv2.bitwise_or(mask1, mask2)
 
             #FILTRO DE SOBEL
             #Aplicação do filtro
-            sobelx = cv2.Sobel(mask, cv2.CV_64F, 1, 0, ksize=3)
-            sobely = cv2.Sobel(mask, cv2.CV_64F, 0, 1, ksize=3)
+            sobelx = cv2.Sobel(mask1, cv2.CV_64F, 1, 0, ksize=3)
+            sobely = cv2.Sobel(mask1, cv2.CV_64F, 0, 1, ksize=3)
             bordas = cv2.bitwise_or(np.absolute(sobelx), np.absolute(sobely))
 
             #junção borda com a máscara, uso o and pq as dimensões de mask e bordas são diferentes
-            combinar = cv2.bitwise_and(bordas, bordas, mask=mask)
+            combinar = cv2.bitwise_and(bordas, bordas, mask=mask1)
 
             cv2.imshow('Imagem original', img)
-            cv2.imshow('Máscara Binária', mask)
+            cv2.imshow('Máscara Binária', mask1)
             cv2.imshow('Bordas', bordas)
             cv2.imshow('Junção da Máscara e Bordas', combinar)
 
