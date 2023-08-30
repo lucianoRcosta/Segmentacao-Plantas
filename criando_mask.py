@@ -21,8 +21,8 @@ for arq in arquivos:
             hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
 
             #limite inferior e superior 1 de matiz de tonalidade verde
-            lower_green_1 = np.array([0, 20, 35])  
-            upper_green_1 = np.array([110, 255, 255])
+            lower_green_1 = np.array([20, 20, 35])  
+            upper_green_1 = np.array([90, 255, 255])
 
              #limite inferior e superior 2 de matiz de tonalidade verde (desnecessário)
             # lower_green_2 = np.array([50, 20, 35])  
@@ -35,32 +35,32 @@ for arq in arquivos:
 
             #processo morfológico de fechamento
             kernel = np.ones((3,3),np.uint8)
-            fechamento = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel, iterations=1)   
+            fechamento = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel, iterations=2)   
             
             #processo morfológico de abertura
-            kernel = np.ones((2,2),np.uint8)
-            abertura = cv2.morphologyEx(fechamento, cv2.MORPH_OPEN, kernel, iterations=3)
+            # kernel = np.ones((2,2),np.uint8)
+            # abertura = cv2.morphologyEx(fechamento, cv2.MORPH_OPEN, kernel, iterations=3)
 
-            #Dilatação
-            kernel = np.ones((5, 5),np.uint8)
-            dilata = cv2.dilate(abertura, kernel, iterations=1)
+            # #Dilatação
+            # kernel = np.ones((5, 5),np.uint8)
+            # dilata = cv2.dilate(fechamento, kernel, iterations=1)
             
             #FILTRO DE SOBEL
             #Aplicação do filtro
-            sobelx = cv2.Sobel(dilata, cv2.CV_64F, 1, 0, ksize=3)
-            sobely = cv2.Sobel(dilata, cv2.CV_64F, 0, 1, ksize=3)
+            sobelx = cv2.Sobel(fechamento, cv2.CV_64F, 1, 0, ksize=3)
+            sobely = cv2.Sobel(fechamento, cv2.CV_64F, 0, 1, ksize=3)
             bordas = cv2.bitwise_or(np.absolute(sobelx), np.absolute(sobely))
 
             #junção borda com a máscara, uso o and pq as dimensões de mask e bordas são diferentes
-            combinar = cv2.bitwise_and(bordas, bordas, mask=dilata)
+            combinar = cv2.bitwise_and(bordas, bordas, mask=fechamento)
 
             cv2.imshow('Imagem original', img)
             cv2.imshow('Máscara da matiz', mask1)
             cv2.imshow('Bordas', bordas)
             cv2.imshow('Junção da Máscara e Bordas', combinar)
-            cv2.imshow('Abertura', abertura)
+            # cv2.imshow('Abertura', abertura)
             cv2.imshow('Fechamento', fechamento)
-            cv2.imshow('Dilatacao', dilata)
+            # cv2.imshow('Dilatacao', dilata)
 
             cv2.waitKey(0)
             cv2.destroyAllWindows()
