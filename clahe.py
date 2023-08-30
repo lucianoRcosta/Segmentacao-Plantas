@@ -5,7 +5,7 @@ def Clahe(img):
     canal_azul, canal_verde, canal_vermelho = cv2.split(img)
 
     #objeto clahe criado
-    clahe = cv2.createCLAHE(clipLimit=0.5, tileGridSize=(3, 3))
+    clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(2, 2))
 
     #clahe aplicado em cada canal
     clahe_azul = clahe.apply(canal_azul)
