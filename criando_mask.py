@@ -16,6 +16,17 @@ def contrast_check(img):
         return Clahe(img)
     else:
         return img
+    
+#função temporária
+def maior_contorno(contornos):
+    maior_area = 0
+    maior_contorno = None
+    for contorno in contornos:
+        area = cv2.contourArea(contorno)
+        if area > maior_area:
+            maior_area = area
+            maior_contorno = contorno
+    return maior_contorno
 
 
 if __name__ == '__main__':
@@ -49,7 +60,16 @@ if __name__ == '__main__':
                 #processo morfológico de fechamento
                 kernel = np.ones((3,3),np.uint8)
                 fechamento = cv2.morphologyEx(mask1, cv2.MORPH_CLOSE, kernel, iterations=2)   
-                  
+                
+                #findContours sendo aplicada ao fechamento
+                contornos, _ = cv2.findContours(fechamento, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+                
+                contorno_final = maior_contorno(contornos)
+                mascara_preta = np.zeros_like(img)
+                
+                #desenha contornos na máscara preta
+                cv2.drawContours(mascara_preta, [contorno_final], -1, (255, 255, 255), thickness=cv2.FILLED)
+
                 #processo morfológico de abertura
                 # kernel = np.ones((2,2),np.uint8)
                 # abertura = cv2.morphologyEx(fechamento, cv2.MORPH_OPEN, kernel, iterations=3)
@@ -69,7 +89,8 @@ if __name__ == '__main__':
                 cv2.imshow('Junção da Máscara e Bordas', combinar)
                 # cv2.imshow('Abertura', abertura)
                 cv2.imshow('Fechamento', fechamento)
-            
+                cv2.imshow('Máscara com Maior Contorno', mascara_preta)
+
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
             else:
