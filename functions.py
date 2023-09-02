@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 #cria a máscara com as matizes verdes
 def create_mask(img):
     #limite inferior e superior 1 de matiz de tonalidade verde
-    intervalo_verde = (np.array([25, 20, 35]), np.array([90, 255, 255]))
+    intervalo_verde = (np.array([30, 20, 35]), np.array([100, 255, 255]))
 
     mask = cv2.inRange(img, *intervalo_verde)
 
@@ -31,7 +31,7 @@ def clahe(img):
     canal_azul, canal_verde, canal_vermelho = cv2.split(img)
 
     #objeto clahe criado
-    clahe = cv2.createCLAHE(clipLimit=1.5, tileGridSize=(3, 3))
+    clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(3, 3))
 
     #clahe aplicado em cada canal
     clahe_azul = clahe.apply(canal_azul)

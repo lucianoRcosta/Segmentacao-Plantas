@@ -5,7 +5,7 @@ from functions import *
 if __name__ == '__main__':
     # img = cv2.imread('dataset/0a2de4c5-d688-4f9d-9107-ace1d281c307___Com.G_TgS_FL 7941_180deg.JPG')
 
-    pasta_imgs = 'dataset/'
+    pasta_imgs = 'dataset2/'
     arquivos = os.listdir(pasta_imgs)
 
     #loop que pega os arquivos na pasta dataset
@@ -16,7 +16,7 @@ if __name__ == '__main__':
             img = cv2.imread(caminho_img)
 
             #condição que checa se img não está vazio
-            if img is not None:
+            if img is not None:           
                 #recebe a função de checagem de contraste
                 img_contrast_check = contrast_check(img)
 
