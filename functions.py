@@ -6,10 +6,9 @@ import matplotlib.pyplot as plt
 #cria a máscara com as matizes verdes
 def create_mask(img):
     #limite inferior e superior 1 de matiz de tonalidade verde
-    lower_green_1 = np.array([25, 20, 35])  
-    upper_green_1 = np.array([90, 255, 255])
+    intervalo_verde = (np.array([25, 20, 35]), np.array([90, 255, 255]))
 
-    mask = cv2.inRange(img, lower_green_1, upper_green_1)
+    mask = cv2.inRange(img, *intervalo_verde)
 
     return mask
 
@@ -20,7 +19,7 @@ def contrast_check(img):
     histograma = cv2.calcHist([hsv], [2], None, [256], [0, 256])
 
     dispersao = np.max(histograma) - np.min(histograma)
-    limite_dispersao = 12000
+    limite_dispersao = 10000
 
     if dispersao >= limite_dispersao:
         return clahe(img)
@@ -32,7 +31,7 @@ def clahe(img):
     canal_azul, canal_verde, canal_vermelho = cv2.split(img)
 
     #objeto clahe criado
-    clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(2, 2))
+    clahe = cv2.createCLAHE(clipLimit=1.5, tileGridSize=(3, 3))
 
     #clahe aplicado em cada canal
     clahe_azul = clahe.apply(canal_azul)
