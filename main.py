@@ -5,7 +5,7 @@ from functions import *
 if __name__ == '__main__':
     # img = cv2.imread('dataset/0a2de4c5-d688-4f9d-9107-ace1d281c307___Com.G_TgS_FL 7941_180deg.JPG')
 
-    pasta_imgs = 'dataset2/'
+    pasta_imgs = 'dataset1/'
     arquivos = os.listdir(pasta_imgs)
 
     #loop que pega os arquivos na pasta dataset
@@ -23,7 +23,13 @@ if __name__ == '__main__':
                 #aplicar borramento gaussiano para reduzir ruídos
                 borrado_mask = cv2.GaussianBlur(img_contrast_check, (3, 3), 0) #mais pixels = menos ruído e mais imperfeições!
 
-                #converte imagem para o espaço de cores hsv
+                # imagem_tons_de_cinza = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2GRAY)
+
+                # _, binarized_image = cv2.threshold(imagem_tons_de_cinza, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+                # cv2.imshow("Otsu", binarized_image)
+
+                # converte imagem para o espaço de cores hsv
                 hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
                 
                 mask = create_mask(hsv)
