@@ -8,19 +8,19 @@ if __name__ == '__main__':
     pasta_imgs = 'dataset1/'
     arquivos = os.listdir(pasta_imgs)
 
-    #loop que pega os arquivos na pasta dataset
+    # loop que pega os arquivos na pasta dataset
     for arq in arquivos:
-        #condição que checa se o arquivo termina com a extensão .jpg
+        # condição que checa se o arquivo termina com a extensão .jpg
         if arq.lower().endswith('jpg'):
             caminho_img = os.path.join(pasta_imgs, arq)
             img = cv2.imread(caminho_img)
 
-            #condição que checa se img não está vazio
+            # condição que checa se img não está vazio
             if img is not None:           
-                #recebe a função de checagem de contraste
+                # recebe a função de checagem de contraste
                 img_contrast_check = contrast_check(img)
 
-                #aplicar borramento gaussiano para reduzir ruídos
+                # aplicar borramento gaussiano para reduzir ruídos
                 borrado_mask = cv2.GaussianBlur(img_contrast_check, (3, 3), 0) #mais pixels = menos ruído e mais imperfeições!
 
                 # imagem_tons_de_cinza = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2GRAY)
@@ -38,7 +38,10 @@ if __name__ == '__main__':
                 mask_contornos = find_draw_contours(mask_fechamento)
                 
                 #separação do fundo de imagem com a região de interesse
-                imagem_roi = background_separation(img_contrast_check, img_contrast_check, mask_contornos)
+                img_roi = background_separation(img_contrast_check, img_contrast_check, mask_contornos)
+
+                # passando para o formato lbp
+                img_lbp = structuring_lbp(img_roi)
                 
                 # bordas, combinar = filtro_de_sobel(mask_contornos)
 
@@ -49,7 +52,9 @@ if __name__ == '__main__':
                 # cv2.imshow('Abertura', abertura)
                 cv2.imshow('Fechamento', mask_fechamento)
                 cv2.imshow('Maior Contorno', mask_contornos)
-                cv2.imshow('Aplicar', imagem_roi)
+                cv2.imshow('Sem Background', img_roi)
+                cv2.imshow('Img com LBP', img_lbp)
+
 
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
