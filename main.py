@@ -29,24 +29,27 @@ if __name__ == '__main__':
 
                 # cv2.imshow("Otsu", binarized_image)
 
-                # converte imagem para o espaço de cores hsv
                 hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
                 
                 mask = create_mask(hsv)
                 
                 mask_fechamento = fechamento(mask)  
-                
+
                 mask_contornos = find_draw_contours(mask_fechamento)
                 
-                bordas, combinar = filtro_de_sobel(mask_contornos)
+                #separação do fundo de imagem com a região de interesse
+                imagem_roi = background_separation(img_contrast_check, img_contrast_check, mask_contornos)
+                
+                # bordas, combinar = filtro_de_sobel(mask_contornos)
 
                 cv2.imshow('Imagem original', img)
                 cv2.imshow('Máscara da matiz', mask)
-                cv2.imshow('Bordas', bordas)
-                cv2.imshow('Junção da Máscara e Bordas', combinar)
+                # cv2.imshow('Bordas', bordas)
+                # cv2.imshow('Junção da Máscara e Bordas', combinar)
                 # cv2.imshow('Abertura', abertura)
                 cv2.imshow('Fechamento', mask_fechamento)
                 cv2.imshow('Maior Contorno', mask_contornos)
+                cv2.imshow('Aplicar', imagem_roi)
 
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()

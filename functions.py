@@ -1,7 +1,5 @@
 import cv2
-import os
 import numpy as np
-import matplotlib.pyplot as plt
 
 #cria a máscara com as matizes verdes
 def create_mask(img):
@@ -97,3 +95,7 @@ def filtro_de_sobel(img):
     combinar = cv2.bitwise_and(bordas, bordas, mask=img)
 
     return bordas , combinar
+
+#separação do fundo de imagem com a região de interesse
+def background_separation(img1, img2, mask1):
+    return cv2.bitwise_and(img1, img2, mask=mask1)
