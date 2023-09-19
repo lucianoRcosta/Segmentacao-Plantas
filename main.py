@@ -23,12 +23,6 @@ if __name__ == '__main__':
                 #aplicar borramento gaussiano para reduzir ruídos
                 borrado_mask = cv2.GaussianBlur(img_contrast_check, (3, 3), 0) #mais pixels = menos ruído e mais imperfeições!
 
-                # imagem_tons_de_cinza = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2GRAY)
-
-                # _, binarized_image = cv2.threshold(imagem_tons_de_cinza, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-                # cv2.imshow("Otsu", binarized_image)
-
                 hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
                 
                 mask = create_mask(hsv)
@@ -39,14 +33,9 @@ if __name__ == '__main__':
                 
                 #separação do fundo de imagem com a região de interesse
                 imagem_roi = background_separation(img_contrast_check, img_contrast_check, mask_contornos)
-                
-                # bordas, combinar = filtro_de_sobel(mask_contornos)
 
                 cv2.imshow('Imagem original', img)
                 cv2.imshow('Máscara da matiz', mask)
-                # cv2.imshow('Bordas', bordas)
-                # cv2.imshow('Junção da Máscara e Bordas', combinar)
-                # cv2.imshow('Abertura', abertura)
                 cv2.imshow('Fechamento', mask_fechamento)
                 cv2.imshow('Maior Contorno', mask_contornos)
                 cv2.imshow('Aplicar', imagem_roi)
