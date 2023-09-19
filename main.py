@@ -21,13 +21,7 @@ if __name__ == '__main__':
                 img_contrast_check = contrast_check(img)
 
                 # aplicar borramento gaussiano para reduzir ruídos
-                borrado_mask = cv2.GaussianBlur(img_contrast_check, (3, 3), 0) #mais pixels = menos ruído e mais imperfeições!
-
-                # imagem_tons_de_cinza = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2GRAY)
-
-                # _, binarized_image = cv2.threshold(imagem_tons_de_cinza, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
-
-                # cv2.imshow("Otsu", binarized_image)
+                borrado_mask = cv2.GaussianBlur(img_contrast_check, (3, 3), 0) 
 
                 hsv = cv2.cvtColor(borrado_mask, cv2.COLOR_BGR2HSV)
                 
@@ -47,9 +41,6 @@ if __name__ == '__main__':
 
                 cv2.imshow('Imagem original', img)
                 cv2.imshow('Máscara da matiz', mask)
-                # cv2.imshow('Bordas', bordas)
-                # cv2.imshow('Junção da Máscara e Bordas', combinar)
-                # cv2.imshow('Abertura', abertura)
                 cv2.imshow('Fechamento', mask_fechamento)
                 cv2.imshow('Maior Contorno', mask_contornos)
                 cv2.imshow('Sem Background', img_roi)
