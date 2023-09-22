@@ -5,9 +5,9 @@ from functions import *
 if __name__ == '__main__':
     # img = cv2.imread('dataset/0a2de4c5-d688-4f9d-9107-ace1d281c307___Com.G_TgS_FL 7941_180deg.JPG')
     
-    delete_outputs('image_segmentation/binarization_outputs') #esvazia a pasta output
+    delete_outputs('binarization_outputs') #esvazia a pasta output
 
-    pasta_imgs = 'image_segmentation/dataset/'
+    pasta_imgs = 'dataset1/'
     arquivos = os.listdir(pasta_imgs)  
     contador = 0
     #loop que pega os arquivos na pasta dataset
@@ -36,7 +36,7 @@ if __name__ == '__main__':
                 #separação do fundo de imagem com a região de interesse
                 imagem_roi = background_separation(img_contrast_check, img_contrast_check, mask_contornos)
 
-                imagem_lbp = structuring_lbp(imagem_roi)
+                imagem_lbp, histograma_lbp = structuring_lbp(imagem_roi)
 
                 cv2.imshow('Imagem original', img)
                 cv2.imshow('Máscara da matiz', mask)
@@ -44,6 +44,8 @@ if __name__ == '__main__':
                 cv2.imshow('Maior Contorno', mask_contornos)
                 cv2.imshow('No backgorund', imagem_roi)
                 cv2.imshow('Binarization', imagem_lbp)
+                print("Vetor de características LBP:", contador)
+                print(histograma_lbp)   
 
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()

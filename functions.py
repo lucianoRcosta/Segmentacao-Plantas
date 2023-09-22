@@ -165,6 +165,16 @@ def lbp_calculated_pixel(img, x, y):
           
     return val
 
+# Função para calcular o histograma LBP
+def calculate_lbp_histogram(img_lbp):
+    # Calcula o histograma LBP usando 256 bins (para LBP com 8 bits)
+    hist, _ = np.histogram(img_lbp.ravel(), bins=np.arange(257))
+    # Normalize o histograma para ter comprimento 1
+    hist = hist.astype("float")
+    hist /= (hist.sum() + 1e-7)
+    return hist
+
+
 # função que passa a imagem para cinza, captura formato e cria o array binário
 def structuring_lbp(imagem_roi):
     height, width, _ = imagem_roi.shape
@@ -184,12 +194,26 @@ def structuring_lbp(imagem_roi):
     for i in range(0, height):
         for j in range(0, width):
             img_lbp[i, j] = lbp_calculated_pixel(img_gray, i, j)
+
+    feature_vector = []
+
+    # Calcule o LBP para cada pixel da imagem e acumule no vetor de características
+    for i in range(0, height):
+        for j in range(0, width):
+            lbp_val = lbp_calculated_pixel(img_gray, i, j)
+            feature_vector.append(lbp_val)
+
+    # Converta o vetor de características em um array NumPy
+    feature_vector = np.array(feature_vector)
+
+    # Calcule o histograma LBP a partir do vetor de características
+    lbp_histogram = calculate_lbp_histogram(feature_vector)
     
-    return img_lbp
+    return img_lbp, lbp_histogram
 
 # função que faz o caminho de onde o arquivo será despejado 
 def naming_outputs(contador):
-    pasta_output = 'image_segmentation/binarization_outputs' # modifique aqui para colocar caminho próprio
+    pasta_output = 'binarization_outputs' # modifique aqui para colocar caminho próprio
     nome_arquivo = f'binarized_{contador}.png'
 
     output_caminho = os.path.join(pasta_output, nome_arquivo)
