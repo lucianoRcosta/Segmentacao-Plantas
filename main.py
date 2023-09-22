@@ -52,8 +52,8 @@ if __name__ == '__main__':
                 
                 # comentem esse trecho para não gerar arquivos
                 output_caminho = naming_outputs(contador) # esse é a função que gera o caminho, será necessário modifica-lá para gerar um caminho próprio
-                cv2.imwrite(output_caminho, imagem_lbp)
+                cv2.imwrite(output_caminho, mask_contornos)
             else:
                 print(f'Erro ao carregar imagem {arq}')
         
-        contador += 1
+        contador += 1   
