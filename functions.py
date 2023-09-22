@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import os
 
 #cria a máscara com as matizes verdes
 def create_mask(img):
@@ -185,3 +186,30 @@ def structuring_lbp(imagem_roi):
             img_lbp[i, j] = lbp_calculated_pixel(img_gray, i, j)
     
     return img_lbp
+
+# função que faz o caminho de onde o arquivo será despejado 
+def naming_outputs(contador):
+    pasta_output = 'image_segmentation/binarization_outputs' # modifique aqui para colocar caminho próprio
+    nome_arquivo = f'binarized_{contador}.png'
+
+    output_caminho = os.path.join(pasta_output, nome_arquivo)
+
+    return output_caminho
+
+# função que esvazia a pasta binarization_outputs
+def delete_outputs(folder_path):
+    # checa se existe a pasta
+    if os.path.exists(folder_path):
+        # Lista todos os arquivos na pasta
+        arquivos = os.listdir(folder_path)
+        
+        # exclui cada arquivo dentro da pasta
+        for file in arquivos:
+            caminho_arquivo = os.path.join(folder_path, file)
+            try: # try_catch para gerar exceção 
+                if os.path.isfile(caminho_arquivo):
+                    os.remove(caminho_arquivo)  # Exclua apenas arquivos, não pastas
+            except Exception as e: #caso exista uma pasta dentro, o que não é pra ter
+                print(f'Erro ao excluir {caminho_arquivo}: {str(e)}')
+    else:
+        print(f'A pasta {folder_path} não existe.')

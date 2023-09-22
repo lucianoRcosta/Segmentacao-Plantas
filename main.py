@@ -4,10 +4,12 @@ from functions import *
 
 if __name__ == '__main__':
     # img = cv2.imread('dataset/0a2de4c5-d688-4f9d-9107-ace1d281c307___Com.G_TgS_FL 7941_180deg.JPG')
+    
+    delete_outputs('image_segmentation/binarization_outputs') #esvazia a pasta output
 
-    pasta_imgs = 'dataset1/'
-    arquivos = os.listdir(pasta_imgs)
-
+    pasta_imgs = 'image_segmentation/dataset/'
+    arquivos = os.listdir(pasta_imgs)  
+    contador = 0
     #loop que pega os arquivos na pasta dataset
     for arq in arquivos:
         #condição que checa se o arquivo termina com a extensão .jpg
@@ -45,5 +47,11 @@ if __name__ == '__main__':
 
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
+                
+                # comentem esse trecho para não gerar arquivos
+                output_caminho = naming_outputs(contador) # esse é a função que gera o caminho, será necessário modifica-lá para gerar um caminho próprio
+                cv2.imwrite(output_caminho, imagem_lbp)
             else:
                 print(f'Erro ao carregar imagem {arq}')
+        
+        contador += 1
