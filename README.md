@@ -30,3 +30,10 @@
     <p float="center">
     <img alt="Fechamento" title="Fechamento" src="/etapas_dos_resultados/no_background.png" width="400"> 
     </p>
+
+<h5 align="center">5 -> Aplicação do LBP(structuring_lbp)<h5> <br>    
+    <p float="left">Através do uso de quatro funções, a get_pixel é utilziado para adquirir o pixel central, lbp_calculated_pixel que calcula o LBP para cada pixel e acumula o vetor de características, calculate_lbp_histogram função para calcular o histograma LBP e structuring_lbp é a função que passa a imagem para cinza, captura o formato e cria o array binário.
+    </p>
+    <p float="center">
+    <img alt="Fechamento" title="Fechamento" src="/etapas_dos_resultados/binarization.png" width="400"> 
+    </p>
