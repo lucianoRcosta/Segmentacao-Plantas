@@ -44,8 +44,8 @@ if __name__ == '__main__':
                 cv2.imshow('Maior Contorno', mask_contornos)
                 cv2.imshow('No backgorund', imagem_roi)
                 cv2.imshow('Binarization', imagem_lbp)
-                print("Vetor de características LBP:", contador)
-                print(histograma_lbp)   
+                # print("Vetor de características LBP:", contador)
+                # print(histograma_lbp)   
 
                 cv2.waitKey(0)
                 cv2.destroyAllWindows()
