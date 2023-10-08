@@ -1,6 +1,6 @@
 <h1 align="center"> Projeto de segmentação de folhas de várias espécies</h1> <br>
     <p>
-            Segmentações feitas com intuito de suprir a ausências de segmentações em um dataset de folhas, com o intuito de inserir a LBP para um método de classificação.
+            Segmentações feitas com intuito de suprir as ausências de segmentações em um dataset de folhas, com o intuito de inserir a LBP para um método de classificação.
         Segue abaixo algumas técnicas utilizadas na segmentação:
     </p>
 
